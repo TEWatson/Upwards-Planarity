@@ -1,0 +1,51 @@
+﻿  stdafx.cpp
+  UpwardsPlanarityTesting.cpp
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(217): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(427): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(627): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(687): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(753): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(819): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(889): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(933): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(997): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(1024): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(1082): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(1131): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(1175): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(1236): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(1432): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(1628): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(1824): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(1924): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(2120): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(2228): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(2546): warning C4068: unknown pragma
+e:\development\reu2017\visualstudioproject\upwardsplanaritytesting\upwardsplanaritytesting\upgrapher.cpp(60): warning C4018: '<': signed/unsigned mismatch
+  UPGrapher.cpp
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(217): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(427): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(627): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(687): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(753): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(819): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(889): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(933): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(997): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(1024): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(1082): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(1131): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(1175): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(1236): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(1432): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(1628): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(1824): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(1924): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(2120): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(2228): warning C4068: unknown pragma
+e:\development\reu2017\ogdf-latest\ogdf-master\include\ogdf\fileformats\graphio.h(2546): warning C4068: unknown pragma
+e:\development\reu2017\visualstudioproject\upwardsplanaritytesting\upwardsplanaritytesting\upgrapher.cpp(60): warning C4018: '<': signed/unsigned mismatch
+  JGraph.cpp
+  Generating Code...
+  UpwardsPlanarityTesting.vcxproj -> E:\Development\REU2017\VisualStudioProject\UpwardsPlanarityTesting\Debug\UpwardsPlanarityTesting.exe
+  UpwardsPlanarityTesting.vcxproj -> E:\Development\REU2017\VisualStudioProject\UpwardsPlanarityTesting\Debug\UpwardsPlanarityTesting.pdb (Full PDB)

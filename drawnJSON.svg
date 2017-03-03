@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" version="1.1" baseProfile="full" viewBox="-51 -1 142 142">
+	<g>
+		<g>
+			<polygon points="-10,25,-11.7334,29.8536,-13.8136,28.4669," stroke="#000000" />
+			<path fill="none" d=" M-10,25 L-40,70" stroke="#000000" />
+		</g>
+		<g>
+			<polygon points="10,25,13.8136,28.4669,11.7334,29.8536," stroke="#000000" />
+			<path fill="none" d=" M10,25 L40,70" stroke="#000000" />
+		</g>
+		<g>
+			<polygon points="50,85,53.8136,88.4669,51.7334,89.8536," stroke="#000000" />
+			<path fill="none" d=" M50,85 L80,130" stroke="#000000" />
+		</g>
+		<g>
+			<polygon points="30,85,28.2666,89.8536,26.1864,88.4669," stroke="#000000" />
+			<path fill="none" d=" M30,85 L0,130" stroke="#000000" />
+		</g>
+	</g>
+	<g>
+		<rect x="-10" y="0" width="20" height="20" />
+	</g>
+	<g>
+		<rect x="-50" y="60" width="20" height="20" />
+	</g>
+	<g>
+		<rect x="30" y="60" width="20" height="20" />
+	</g>
+	<g>
+		<rect x="70" y="120" width="20" height="20" />
+	</g>
+	<g>
+		<rect x="-10" y="120" width="20" height="20" />
+	</g>
+</svg>
