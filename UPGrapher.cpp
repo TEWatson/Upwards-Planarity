@@ -47,16 +47,6 @@ private:
 			int index = (int)(findSourceIndex - idList.begin());
 			node source = nodeList.at(index);
 
-			//for (Json::Value::iterator arrayIter = (*it).begin(); arrayIter != (*it).end(); ++arrayIter) {
-			//	node sink;
-			//	string search = styledWriter.write((*arrayIter));
-			//	int size = (*arrayIter).size();
-			//	std::vector<string>::iterator findSinkIndex = find(idList.begin(), idList.end(), search);
-			//	int index = (int)(findSinkIndex - idList.begin());
-			//	sink = nodeList.at(index);
-			//	JSONGraph.newEdge(source, sink); // and finally make an edge
-			//}
-
 			for (int arrayIter = 0; arrayIter < (*((*it).begin())).size(); arrayIter++) {
 				node sink;
 				string search = fastWriter.write((*(*it).begin())[arrayIter]);
