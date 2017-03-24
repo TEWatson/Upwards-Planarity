@@ -26,7 +26,7 @@ std::wstring s2ws(const std::string& s)
 
 int main()
 {
-	string jsonFalse = //TODO: need to have a check for single source
+	string jsonTrue =
 		"{"
 			"\"directed\" : true,"
 			"\"adjacencies\" : "
@@ -36,11 +36,11 @@ int main()
 					"{\"C\" : [\"B\", \"D\"]},"
 					"{\"D\" : [\"A\"]},"
 					"{\"E\" : [\"C\", \"F\"]},"
-					"{\"F\" : [\"B\", \"D\"]}"
+					"{\"F\" : [\"B\"]}"
 				"]"
 		"}";
 
-	string jsonTrue =
+	string jsonFalse = //this example is upward planar but NOT single source
 		"{"
 			"\"directed\" : true,"
 			"\"adjacencies\" : "
@@ -60,7 +60,7 @@ int main()
 	// reading from string to JSON
 	Json::Reader stringReader;
 	Json::Value readDoc;
-	bool success = stringReader.parse(jsonTrue, readDoc, true);
+	bool success = stringReader.parse(jsonFalse, readDoc, true);
 
 	// reading from JSON to Graph
 	UPGrapher grapher = UPGrapher();
@@ -71,9 +71,12 @@ int main()
 	OutputDebugString(stemp.c_str());
 
 	// embedding upward planar
-	// TODO: proper fail messages when not single-source
-	//       stretch goal: embed non-single-source
-	stemp = s2ws(to_string(grapher.DrawUPGraph("drawnJSON.svg")));
+	// TODO: embed non-single-source
+	bool embedded = grapher.DrawUPGraph("drawnJSON.svg");
+	if (embedded)
+		stemp = s2ws("SUCCESS: successfully embedded the upward planar graph\n");
+	else
+		stemp = s2ws("FAILURE: cannot find an upward planar embedding for this graph; make sure the graph is single source\n");
 	OutputDebugString(stemp.c_str());
 
 	return 0;

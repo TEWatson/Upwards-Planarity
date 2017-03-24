@@ -155,27 +155,33 @@ public:
 		}
 		else {
 			adjEntry externalFaceAdj;
-			bool isUpwardPlanar = UpwardPlanarity::embedUpwardPlanar(graph, externalFaceAdj); //attempt to embed as upward planar (if not possible, then ??)
-			if (!isUpwardPlanar)
-				return isUpwardPlanar;
+			if (hasSingleSource(graph)) {
+				bool temp = UpwardPlanarity::isUpwardPlanar(graph);
+				bool isUpwardPlanar = UpwardPlanarity::embedUpwardPlanar(graph, externalFaceAdj); //attempt to embed as upward planar (if not possible, then ??)
+				if (!isUpwardPlanar)
+					return false;
 
-			CombinatorialEmbedding emb(graph);
-			emb.setExternalFace(emb.rightFace(externalFaceAdj)); //not well understood
-			UpwardPlanRep upr(emb); //maybe add support for this object later on
-			upr.augment();
+				CombinatorialEmbedding emb(graph);
+				emb.setExternalFace(emb.rightFace(externalFaceAdj)); //not well understood
+				UpwardPlanRep upr(emb); //maybe add support for this object later on
+				upr.augment();
 
-			LayerBasedUPRLayout layout; //maybe add support for this object later on
-			layout.call(upr, attr);
+				LayerBasedUPRLayout layout; //maybe add support for this object later on
+				layout.call(upr, attr);
 
-			// show edge arrows
-			for (edge e : graph.edges) {
-				attr.arrowType(e) = EdgeArrow::First;
+				// show edge arrows
+				for (edge e : graph.edges) {
+					attr.arrowType(e) = EdgeArrow::First;
+				}
+
+				outputFile = output;
+				WriteAsSVG();
+
+				return true;
 			}
-
-			outputFile = output;
-			WriteAsSVG();
-
-			return isUpwardPlanar;
+			else {
+				return false;
+			}
 		}
 	}
 
