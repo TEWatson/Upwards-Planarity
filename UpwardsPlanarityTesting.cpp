@@ -12,7 +12,7 @@
 
 using namespace ogdf;
 
-std::wstring s2ws(const std::string& s)
+std::wstring StringToWindowsString(const std::string& s)
 {
 	int len;
 	int slength = (int)s.length() + 1;
@@ -67,16 +67,16 @@ int main()
 	grapher.LoadGraphFromJSON(readDoc);
 	grapher.WriteAsGML("test.gml");
 
-	std::wstring stemp = s2ws(styledWriter.write(readDoc));
+	std::wstring stemp = StringToWindowsString(styledWriter.write(readDoc));
 	OutputDebugString(stemp.c_str());
 
 	// embedding upward planar
 	// TODO: embed non-single-source
 	bool embedded = grapher.DrawUPGraph("drawnJSON.svg");
 	if (embedded)
-		stemp = s2ws("SUCCESS: successfully embedded the upward planar graph\n");
+		stemp = StringToWindowsString("SUCCESS: successfully embedded the upward planar graph\n");
 	else
-		stemp = s2ws("FAILURE: cannot find an upward planar embedding for this graph; make sure the graph is single source\n");
+		stemp = StringToWindowsString("FAILURE: cannot find an upward planar embedding for this graph; make sure the graph is single source\n");
 	OutputDebugString(stemp.c_str());
 
 	return 0;
