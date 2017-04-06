@@ -24,6 +24,8 @@ private:
 	string inputFile = "";
 	string outputFile = "";
 	bool graphLoaded = false;
+	bool hasJSON = false;
+	Json::Value storedJSONGraph;
 
 	Graph GraphFromJSON(string JSONdoc) {
 		Json::Reader stringReader;
@@ -38,6 +40,8 @@ private:
 	// currently we ignore the directedness value, we'll just assume it is directed for now
 	Graph GraphFromJSON(Json::Value JSONobj) {
 		Graph JSONGraph;
+		storedJSONGraph = JSONobj;
+		hasJSON = true;
 		Json::Value adjacencies = JSONobj["adjacencies"];
 		std::vector<string> idList; // List of informal node identifiers
 		std::vector<node> nodeList; // List of node objects
@@ -142,6 +146,15 @@ public:
 		GraphIO::write(attr, explicitFile, GraphIO::drawSVG);
 	}
 
+	string GetJSONAsString() {
+		Json::StyledWriter styledWriter;
+		return styledWriter.write(storedJSONGraph);
+	}
+
+	Json::Value GetJSONAsObject() {
+		return storedJSONGraph;
+	}
+
 	void LoadGraphFromJSON(string JSONdoc) {
 		graph = GraphFromJSON(JSONdoc);
 		graphLoaded = true;
@@ -159,11 +172,11 @@ public:
 		int nfaces = 0;
 		std::vector<std::vector<int>> coordinates;
 		std::vector<std::vector<int>> adjList;
-		int faceOverrunCheck;
+		int faceOverrunCheck = 0;
 		//ignore the "OFF" header options, and assume dimension is 3
 		int progressFlag = FIRST_LINE;
 		while (getline(offFile, line)) {
-			if (line[0] == '#')
+			if ((line[0] == '#') || (line == ""))
 				continue;
 			switch (progressFlag) {
 				case FIRST_LINE: {

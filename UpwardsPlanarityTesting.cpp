@@ -55,29 +55,35 @@ int main()
 				"]"
 		"}";
 
-	Json::StyledWriter styledWriter; // human readable
-	
-	// reading from string to JSON
-	Json::Reader stringReader;
-	Json::Value readDoc;
-	bool success = stringReader.parse(jsonFalse, readDoc, true);
+	//Json::StyledWriter styledWriter; // human readable
+	//
+	//// reading from string to JSON
+	//Json::Reader stringReader;
+	//Json::Value readDoc;
+	//bool success = stringReader.parse(jsonFalse, readDoc, true);
 
-	// reading from JSON to Graph
+	//// reading from JSON to Graph
+	//UPGrapher grapher = UPGrapher();
+	//grapher.LoadGraphFromJSON(readDoc);
+	//grapher.WriteAsGML("test.gml");
+
+	//std::wstring stemp = StringToWindowsString(styledWriter.write(readDoc));
+	//OutputDebugString(stemp.c_str());
+
+	//// embedding upward planar
+	//// TODO: embed non-single-source
+	//bool embedded = grapher.DrawUPGraph("drawnJSON.svg");
+	//if (embedded)
+	//	stemp = StringToWindowsString("SUCCESS: successfully embedded the upward planar graph\n");
+	//else
+	//	stemp = StringToWindowsString("FAILURE: cannot find an upward planar embedding for this graph; make sure the graph is single source\n");
+	//OutputDebugString(stemp.c_str());
+
 	UPGrapher grapher = UPGrapher();
-	grapher.LoadGraphFromJSON(readDoc);
-	grapher.WriteAsGML("test.gml");
-
-	std::wstring stemp = StringToWindowsString(styledWriter.write(readDoc));
-	OutputDebugString(stemp.c_str());
-
-	// embedding upward planar
-	// TODO: embed non-single-source
-	bool embedded = grapher.DrawUPGraph("drawnJSON.svg");
-	if (embedded)
-		stemp = StringToWindowsString("SUCCESS: successfully embedded the upward planar graph\n");
-	else
-		stemp = StringToWindowsString("FAILURE: cannot find an upward planar embedding for this graph; make sure the graph is single source\n");
-	OutputDebugString(stemp.c_str());
+	grapher.LoadGraphFromOFF("sample_input.off");
+	grapher.WriteAsGML("offtest.gml");
+	string jstring = grapher.GetJSONAsString();
+	OutputDebugString(StringToWindowsString(jstring).c_str());
 
 	return 0;
 }
