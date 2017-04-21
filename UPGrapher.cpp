@@ -206,7 +206,7 @@ public:
 					std::istringstream iss(line);
 					int verticesInFace; // should always be three
 					int vertices[3]; // since we're assuming dimension=3
-					iss >> verticesInFace >> vertices[0] >> vertices[1] >> vertices[2];
+					iss >> verticesInFace >> vertices[0] >> vertices[1] >> vertices[2]; //TODO: Use verticiesInFace to get the right number of vertices!!
 					for (int i = 0; i < verticesInFace; i++) { // 3 not hardcoded for better looking code
 						int vertexA = vertices[i];
 						int vertexB = vertices[(i + 1) % 3];
@@ -282,7 +282,7 @@ public:
 		DrawUPGraph(outputFile);
 	}
 
-	bool DrawUPGraph(string output) {
+	bool DrawUPGraph(string outputPath) {
 		if (graphLoaded == false) {
 			return false;
 		}
@@ -304,10 +304,10 @@ public:
 
 				// show edge arrows
 				for (edge e : graph.edges) {
-					attr.arrowType(e) = EdgeArrow::First;
+					attr.arrowType(e) = EdgeArrow::Last;
 				}
 
-				outputFile = output;
+				outputFile = outputPath;
 				WriteAsSVG();
 
 				return true;

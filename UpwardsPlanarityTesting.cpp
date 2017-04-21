@@ -26,7 +26,7 @@ std::wstring StringToWindowsString(const std::string& s)
 
 int main()
 {
-	string jsonTrue =
+	string jsonTrue = //TODO: fix bug where this is not properly drawn/embedded
 		"{"
 			"\"directed\" : true,"
 			"\"adjacencies\" : "
@@ -34,9 +34,9 @@ int main()
 					"{\"A\" : []},"
 					"{\"B\" : [\"A\"]},"
 					"{\"C\" : [\"B\", \"D\"]},"
-					"{\"D\" : [\"A\"]},"
-					"{\"E\" : [\"C\", \"F\"]},"
-					"{\"F\" : [\"B\"]}"
+					"{\"D\" : [\"A\", \"B\"]},"
+					"{\"E\" : [\"C\", \"F\", \"A\"]},"
+					"{\"F\" : [\"B\", \"A\"]}"
 				"]"
 		"}";
 
@@ -55,35 +55,34 @@ int main()
 				"]"
 		"}";
 
-	//Json::StyledWriter styledWriter; // human readable
-	//
-	//// reading from string to JSON
-	//Json::Reader stringReader;
-	//Json::Value readDoc;
-	//bool success = stringReader.parse(jsonFalse, readDoc, true);
+	Json::StyledWriter styledWriter; // human readable
+	
+	// reading from string to JSON
+	Json::Reader stringReader;
+	Json::Value readDoc;
+	bool success = stringReader.parse(jsonTrue, readDoc, true);
 
-	//// reading from JSON to Graph
-	//UPGrapher grapher = UPGrapher();
-	//grapher.LoadGraphFromJSON(readDoc);
-	//grapher.WriteAsGML("test.gml");
-
-	//std::wstring stemp = StringToWindowsString(styledWriter.write(readDoc));
-	//OutputDebugString(stemp.c_str());
-
-	//// embedding upward planar
-	//// TODO: embed non-single-source
-	//bool embedded = grapher.DrawUPGraph("drawnJSON.svg");
-	//if (embedded)
-	//	stemp = StringToWindowsString("SUCCESS: successfully embedded the upward planar graph\n");
-	//else
-	//	stemp = StringToWindowsString("FAILURE: cannot find an upward planar embedding for this graph; make sure the graph is single source\n");
-	//OutputDebugString(stemp.c_str());
-
+	// reading from JSON to Graph
 	UPGrapher grapher = UPGrapher();
-	grapher.LoadGraphFromOFF("sample_input.off");
+	grapher.LoadGraphFromJSON(readDoc);
+	grapher.WriteAsGML("test.gml");
+
+	std::wstring stemp = StringToWindowsString(styledWriter.write(readDoc));
+	OutputDebugString(stemp.c_str());
+
+	// embedding upward planar
+	bool embedded = grapher.DrawUPGraph("example3.svg");
+	if (embedded)
+		stemp = StringToWindowsString("SUCCESS: successfully embedded the upward planar graph\n");
+	else
+		stemp = StringToWindowsString("FAILURE: cannot find an upward planar embedding for this graph; make sure the graph is single source\n");
+	OutputDebugString(stemp.c_str());
+
+	/*UPGrapher grapher = UPGrapher();
+	grapher.LoadGraphFromOFF("out_aug.off");
 	grapher.WriteAsGML("offtest.gml");
 	string jstring = grapher.GetJSONAsString();
-	OutputDebugString(StringToWindowsString(jstring).c_str());
+	OutputDebugString(StringToWindowsString(jstring).c_str());*/
 
 	return 0;
 }
