@@ -170,7 +170,7 @@ public:
 		string line;
 		int nvertices = 0;
 		int nfaces = 0;
-		std::vector<std::vector<int>> coordinates;
+		std::vector<std::vector<float>> coordinates;
 		std::vector<std::vector<int>> adjList;
 		int faceOverrunCheck = 0;
 		//ignore the "OFF" header options, and assume dimension is 3
@@ -192,9 +192,11 @@ public:
 				case COORDS: { // load coordinates for later reference...
 					std::istringstream iss(line);
 					// assume there are three coordinates as mentioned above
-					int x, y, z;
-					iss >> x >> y >> z;
-					std::vector<int> vertex = { x, y, z }; // x coordinate is not currently used
+					float x, y, z;
+					iss >> x;
+					iss >> y;
+					iss >> z;
+					std::vector<float> vertex = { x, y, z }; // x coordinate is not currently used
 					std::vector<int> emptyAdjEntry = {};
 					coordinates.push_back(vertex);
 					adjList.push_back(emptyAdjEntry);
@@ -204,16 +206,21 @@ public:
 				}
 				case FACES: { // use coordinates to determine direction of face edges; build adjacency list
 					std::istringstream iss(line);
-					int verticesInFace; // should always be three
-					int vertices[3]; // since we're assuming dimension=3
-					iss >> verticesInFace >> vertices[0] >> vertices[1] >> vertices[2]; //TODO: Use verticiesInFace to get the right number of vertices!!
-					for (int i = 0; i < verticesInFace; i++) { // 3 not hardcoded for better looking code
+					int verticesInFace;
+					std::vector<int> vertices;
+					iss >> verticesInFace;
+					for (int v = 0; v < verticesInFace; v++) { // TODO: error checking here for bad .off file
+						int temp;
+						iss >> temp;
+						vertices.push_back(temp);
+					}
+					for (int i = 0; i < verticesInFace; i++) { // assume that dimension is 3 as before
 						int vertexA = vertices[i];
-						int vertexB = vertices[(i + 1) % 3];
-						int Ay = coordinates[vertexA][1];
-						int Az = coordinates[vertexA][2];
-						int By = coordinates[vertexB][1];
-						int Bz = coordinates[vertexB][2];
+						int vertexB = vertices[(i + 1) % verticesInFace];
+						float Ay = coordinates[vertexA][1];
+						float Az = coordinates[vertexA][2];
+						float By = coordinates[vertexB][1];
+						float Bz = coordinates[vertexB][2];
 						int source = NULL;
 						int sink = NULL;
 						if (Ay < By) { // A -> B
