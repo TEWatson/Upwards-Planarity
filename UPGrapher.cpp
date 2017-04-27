@@ -22,7 +22,7 @@ private:
 	Graph graph;
 	GraphAttributes attr; //may not be necessary to retain this as a member
 	string inputFile = "";
-	string outputFile = "";
+	string svgOutputFile = "";
 	bool graphLoaded = false;
 	bool hasJSON = false;
 	Json::Value storedJSONGraph;
@@ -90,7 +90,7 @@ public:
 	UPGrapher(Graph g, string in, string out) {
 		graph = g;
 		inputFile = in;
-		outputFile = out;
+		svgOutputFile = out;
 		GraphAttributes GA(graph, GraphAttributes::nodeGraphics |
 			GraphAttributes::edgeGraphics | GraphAttributes::edgeArrow);
 		attr = GA;
@@ -117,12 +117,12 @@ public:
 		return inputFile;
 	}
 
-	void SetOutputFile(string out) {
-		outputFile = out;
+	void SetSVGOutputFile(string out) {
+		svgOutputFile = out;
 	}
 
-	string GetOutputFile() {
-		return outputFile;
+	string GetSVGOutputFile() {
+		return svgOutputFile;
 	}
 
 	void ReadAsGML() {
@@ -131,7 +131,7 @@ public:
 	}
 
 	void WriteAsGML() {
-		GraphIO::write(graph, outputFile, GraphIO::writeGML);
+		GraphIO::write(graph, svgOutputFile, GraphIO::writeGML);
 	}
 
 	void WriteAsGML(string explicitFile) {
@@ -139,7 +139,7 @@ public:
 	}
 
 	void WriteAsSVG() {
-		GraphIO::write(attr, outputFile, GraphIO::drawSVG);
+		GraphIO::write(attr, svgOutputFile, GraphIO::drawSVG);
 	}
 
 	void WriteAsSVG(string explicitFile) {
@@ -286,7 +286,7 @@ public:
 	}
 
 	bool DrawUPGraph() {
-		DrawUPGraph(outputFile);
+		DrawUPGraph(svgOutputFile);
 	}
 
 	bool DrawUPGraph(string outputPath) {
@@ -314,8 +314,27 @@ public:
 					attr.arrowType(e) = EdgeArrow::Last;
 				}
 
-				outputFile = outputPath;
+				svgOutputFile = outputPath;
 				WriteAsSVG();
+
+				// this draws our "upwards" graph downwards; flip the svg manually
+				GraphIO::SVGSettings svgSettings = GraphIO::SVGSettings();
+				string svgHeight = svgSettings.height();
+				string svgWidth = svgSettings.width();
+				std::ostringstream svg;
+				ifstream in_file(svgOutputFile);
+
+				svg << in_file.rdbuf();
+				string fileString = svg.str();
+				string toRemove = "<svg ";
+				// here we add parameters that standardize the size of the drawing, flip it, then move it down (back into the normal frustum)
+				string toReplace = "<svg width=\"1000\" height=\"1000\" transform=\"scale(1, -1) translate(0,-1000)\" ";
+				size_t pos = fileString.find(toRemove);
+				fileString.replace(pos, string(toRemove).length(), toReplace);
+				in_file.close();
+
+				ofstream out_file(svgOutputFile);
+				out_file << fileString;
 
 				return true;
 			}
