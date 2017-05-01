@@ -8,6 +8,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include "NodeListClass.cpp"
 
 #define FIRST_LINE 0
 #define NUMBERS 1
@@ -155,6 +156,10 @@ public:
 		return storedJSONGraph;
 	}
 
+	Graph GetGraphObject() {
+		return graph;
+	}
+
 	void LoadGraphFromJSON(string JSONdoc) {
 		graph = GraphFromJSON(JSONdoc);
 		graphLoaded = true;
@@ -289,58 +294,75 @@ public:
 		DrawUPGraph(svgOutputFile);
 	}
 
-	bool DrawUPGraph(string outputPath) {
+	// WARNING: This method has the capability to change the internally-stored graph object if it is not already single-source
+	bool DrawUPGraph(string outputPath) { 
 		if (graphLoaded == false) {
 			return false;
 		}
 		else {
 			adjEntry externalFaceAdj;
-			if (hasSingleSource(graph)) {
-				bool temp = UpwardPlanarity::isUpwardPlanar_triconnected(graph);
-				bool isUpwardPlanar = UpwardPlanarity::embedUpwardPlanar(graph, externalFaceAdj); //attempt to embed as upward planar
-				if (!isUpwardPlanar)
-					return false;
+			if (!hasSingleSource(graph)) { // try to force single-source at the expense of adding edges from one node
+				int size = graph.numberOfNodes();
+				node newSourceNode = graph.newNode();
+				NodeListClass wrapper; // had to make a wrapper compatible with the 'allNodes' template class
+				graph.allNodes(wrapper);
 
-				CombinatorialEmbedding emb(graph);
-				emb.setExternalFace(emb.rightFace(externalFaceAdj)); //not well understood
-				UpwardPlanRep upr(emb); //maybe add support for this object later on
-				upr.augment();
-
-				LayerBasedUPRLayout layout; //maybe add support for this object later on
-				layout.call(upr, attr);
-
-				// show edge arrows
-				for (edge e : graph.edges) {
-					attr.arrowType(e) = EdgeArrow::Last;
+				for (int i = 0; i < size; i++) {
+					node loopNode = wrapper.at(i);
+					if ((*loopNode).indeg() == 0) {
+						if ((*loopNode).outdeg() == 0) {
+							graph.delNode(loopNode);
+						}
+						else {
+							graph.newEdge(newSourceNode, loopNode);
+						}
+					}
 				}
-
-				svgOutputFile = outputPath;
-				WriteAsSVG();
-
-				// this draws our "upwards" graph downwards; flip the svg manually
-				GraphIO::SVGSettings svgSettings = GraphIO::SVGSettings();
-				string svgHeight = svgSettings.height();
-				string svgWidth = svgSettings.width();
-				std::ostringstream svg;
-				ifstream in_file(svgOutputFile);
-
-				svg << in_file.rdbuf();
-				string fileString = svg.str();
-				string toRemove = "<svg ";
-				// here we add parameters that standardize the size of the drawing, flip it, then move it down (back into the normal frustum)
-				string toReplace = "<svg width=\"1000\" height=\"1000\" transform=\"scale(1, -1) translate(0,-1000)\" ";
-				size_t pos = fileString.find(toRemove);
-				fileString.replace(pos, string(toRemove).length(), toReplace);
-				in_file.close();
-
-				ofstream out_file(svgOutputFile);
-				out_file << fileString;
-
-				return true;
+				if (!hasSingleSource(graph))
+					return false;
 			}
-			else {
+
+			bool temp = UpwardPlanarity::isUpwardPlanar_triconnected(graph);
+			bool isUpwardPlanar = UpwardPlanarity::embedUpwardPlanar(graph, externalFaceAdj); //attempt to embed as upward planar
+			if (!isUpwardPlanar)
 				return false;
+
+			CombinatorialEmbedding emb(graph);
+			emb.setExternalFace(emb.rightFace(externalFaceAdj)); //not well understood
+			UpwardPlanRep upr(emb); //maybe add support for this object later on
+			upr.augment();
+
+			LayerBasedUPRLayout layout; //maybe add support for this object later on
+			layout.call(upr, attr);
+
+			// show edge arrows
+			for (edge e : graph.edges) {
+				attr.arrowType(e) = EdgeArrow::Last;
 			}
+
+			svgOutputFile = outputPath;
+			WriteAsSVG();
+
+			// this draws our "upwards" graph downwards; flip the svg manually
+			GraphIO::SVGSettings svgSettings = GraphIO::SVGSettings();
+			string svgHeight = svgSettings.height();
+			string svgWidth = svgSettings.width();
+			std::ostringstream svg;
+			ifstream in_file(svgOutputFile);
+
+			svg << in_file.rdbuf();
+			string fileString = svg.str();
+			string toRemove = "<svg ";
+			// here we add parameters that standardize the size of the drawing, flip it, then move it down (back into the normal frustum)
+			string toReplace = "<svg width=\"1000\" height=\"1000\" transform=\"scale(1, -1) translate(0,-1000)\" ";
+			size_t pos = fileString.find(toRemove);
+			fileString.replace(pos, string(toRemove).length(), toReplace);
+			in_file.close();
+
+			ofstream out_file(svgOutputFile);
+			out_file << fileString;
+
+			return true;
 		}
 	}
 
