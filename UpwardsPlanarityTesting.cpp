@@ -78,31 +78,61 @@ int main()
 	//	stemp = StringToWindowsString("FAILURE: cannot find an upward planar embedding for this graph; make sure the graph is single source\n");
 	//OutputDebugString(stemp.c_str());
 
-	UPGrapher grapher = UPGrapher();
-	grapher.LoadGraphFromOFF("out_aug391.off");
-	grapher.WriteAsGML("offtest.gml");
-	string jstring = grapher.GetJSONAsString();
-	OutputDebugString(StringToWindowsString(jstring).c_str());
+	for (int i = 22; i < 23; i++) {
+		for (int round = 0; round < 3; round++) {
+			UPGrapher grapher = UPGrapher();
+			string offFile = "";
+			string gmlFile = "";
+			string svgFile = "";
+			if (round == 0) {
+				offFile = "cont" + to_string(i) + ".off";
+				gmlFile = "cont" + to_string(i) + ".gml";
+				svgFile = "cont" + to_string(i) + ".svg";
+			}
+			else if (round == 1) {
+				offFile = "aug" + to_string(i) + ".off";
+				gmlFile = "aug" + to_string(i) + ".gml";
+				svgFile = "aug" + to_string(i) + ".svg";
+			}
+			else {
+				offFile = "m" + to_string(i) + ".off";
+				gmlFile = "m" + to_string(i) + ".gml";
+				svgFile = "m" + to_string(i) + ".svg";
+			}
+			grapher.LoadGraphFromOFF(offFile);
+			grapher.WriteAsGML(gmlFile);
+			string jstring = grapher.GetJSONAsString();
+			//OutputDebugString(StringToWindowsString(jstring).c_str());
 
-	std::wstring stemp;
-	bool singleSource = hasSingleSource(grapher.GetGraphObject());
-	bool embedded = grapher.DrawUPGraph("aug391.svg");
-	if (singleSource) {
-		if (embedded)
-			stemp = StringToWindowsString("SUCCESS: successfully embedded the upward planar graph\n");
-		else
-			stemp = StringToWindowsString("FAILURE: cannot find an upward planar embedding for this graph; make sure the graph is single source\n");
-	}
-	else {
-		if (embedded) {
-			stemp = StringToWindowsString("SUCCESS: successfully embedded the non-single-source upward planar graph\n");
+			std::wstring stemp;
+			bool singleSource = hasSingleSource(grapher.GetGraphObject());
+			bool embedded = false;
+			try {
+				embedded = grapher.DrawUPGraph(svgFile);
+			}
+			catch (std::bad_alloc& memoryError) {
+				stemp = StringToWindowsString("Failure: encountered a memory exception -- continuing onto next graph\n\n");
+				OutputDebugString(stemp.c_str());
+				continue;
+			}
+			if (singleSource) {
+				if (embedded)
+					stemp = StringToWindowsString("SUCCESS: successfully embedded the upward planar graph\n");
+				else
+					stemp = StringToWindowsString("FAILURE: cannot find an upward planar embedding for this graph; make sure the graph is single source\n");
+			}
+			else {
+				if (embedded) {
+					stemp = StringToWindowsString("SUCCESS: successfully embedded the non-single-source upward planar graph\n");
+				}
+				else {
+					stemp = StringToWindowsString("FAILURE: graph is not single source and could not be converted to upward planar\n");
+					grapher.WriteAsGML("ssAttempt.gml");
+				}
+			}
+			OutputDebugString(stemp.c_str());
 		}
-		else {
-			stemp = StringToWindowsString("FAILURE: graph is not single source and could not be converted to upward planar\n");
-			grapher.WriteAsGML("ssAttempt.gml");
-		}
 	}
-	OutputDebugString(stemp.c_str());
 	
 	return 0;
 }

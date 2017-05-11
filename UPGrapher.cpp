@@ -1,4 +1,6 @@
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 #include "stdafx.h"
+#endif
 
 #include <ogdf/basic/simple_graph_alg.h>
 #include <ogdf/fileformats/GraphIO.h>
@@ -8,6 +10,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+//#include <Windows.h> // TODO: remove this when done
 #include "NodeListClass.cpp"
 
 #define FIRST_LINE 0
@@ -49,6 +52,20 @@ private:
 		for (Json::Value::iterator it = adjacencies.begin(); it != adjacencies.end(); ++it) { // create aligned lists for the nodes and identifiers
 			string nodeString = ((*it).getMemberNames())[0]; // getting the first member, which will be the value name
 			idList.push_back(nodeString);
+
+			//////
+			//string s = "size: " + to_string(nodeList.size()) + ", capacity: " + to_string(nodeList.capacity()) + ", max size: " + to_string(nodeList.max_size()) + "\n";
+			//int len;
+			//int slength = (int)s.length() + 1;
+			//len = MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, 0, 0);
+			//wchar_t* buf = new wchar_t[len];
+			//MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, buf, len);
+			//std::wstring r(buf);
+			//delete[] buf;
+			//OutputDebugString(r.c_str());
+			//////
+
+
 			nodeList.push_back(JSONGraph.newNode());
 		}
 		
@@ -323,7 +340,13 @@ public:
 			}
 
 			bool temp = UpwardPlanarity::isUpwardPlanar_triconnected(graph);
-			bool isUpwardPlanar = UpwardPlanarity::embedUpwardPlanar(graph, externalFaceAdj); //attempt to embed as upward planar
+			bool isUpwardPlanar = false;
+			try {
+				isUpwardPlanar = UpwardPlanarity::embedUpwardPlanar(graph, externalFaceAdj); //attempt to embed as upward planar
+			}
+			catch (std::bad_alloc& memoryError) {
+				return false;
+			}
 			if (!isUpwardPlanar)
 				return false;
 
