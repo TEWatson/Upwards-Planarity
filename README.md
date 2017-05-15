@@ -19,7 +19,7 @@ g++ -std=c++11 -L/{installdir}/ogdf -L/{installdir}/jsoncpp/build/debug/src/lib_
 ```
 ### Set up the command in bash
 Add the resulting executable "upge" to your path, then add the following to a file also called "upge" into /usr/bin:
-```shell
+```bash
 #!bin/bash
 for i in $@;
 do
