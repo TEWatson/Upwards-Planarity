@@ -31,7 +31,7 @@ You should now be able to use the upwards planar grapher from bash.
 
 # Usage
 The syntax for the program is:
-
+```shell
   upge {input .off} {output .gml} {output .svg}
-
+```
 It takes an .off file graph as input and outputs a .gml representation of the graph (unembedded) and an upwards-planarly-embedded .svg representation.
