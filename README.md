@@ -11,7 +11,7 @@ These directions are for using this code directly, not as libraries.
 ## Installation for Unix systems
 Make an empty installation directory {installdir} named however you like. Then, clone this repo into that directory.
 ### Install library dependencies: OGDF and JSONCpp
-For this part of the installation, simply follow the directions for using CMAKE with [OGDF]() and [JSONcpp]() in separate directories inside {installdir}. We'll refer these as {OGDF} and {JSONcpp}.
+For this part of the installation, simply follow the directions for using CMAKE with [OGDF](https://github.com/ogdf/ogdf/blob/master/doc/build.md) and [JSONcpp](https://github.com/open-source-parsers/jsoncpp#building-and-testing-with-cmake) in separate directories inside {installdir}. We'll refer these as {OGDF} and {JSONcpp}.
 ### Compile Upwards-Planarity
 Use g++ like the following to compile:
 ```shell
