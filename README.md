@@ -1,5 +1,5 @@
-# Upwards-Planarity
-Upwards Planar Embedding with the OGDF C++ Library
+# Upwards Planar Graph Embedding (UPGE)
+UPGE uses the OGDF (Open Graph Drawing Framework) C++ library to embed input graphs as upward-planar graphs. The command line interface uses ‘.off’ files as input, and outputs the embedding as an ‘.svg’ drawing.
 
 # License
 Refer back to the licenses for:
